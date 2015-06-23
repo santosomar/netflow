@@ -1,0 +1,24 @@
+input {
+    udp {
+      port => 9996
+      codec => netflow {
+        definitions => "/opt/logstash/codecs/netflow/netflow.yaml"
+        versions => 9
+      }
+    }
+  }
+
+  output {
+    stdout { codec => rubydebug }
+    if ( [host] =~ "172.18.104.1" ) {
+      elasticsearch {
+        index => "logstash_netflow-%{+YYYY.MM.dd}"
+        host => "localhost"
+      }
+    } else {
+      elasticsearch {
+        index => "logstash-%{+YYYY.MM.dd}"
+        host => "localhost"
+      }
+    }
+  }

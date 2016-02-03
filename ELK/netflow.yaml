@@ -10,7 +10,7 @@ input {
 
   output {
     stdout { codec => rubydebug }
-    if ( [host] =~ "172.18.104.1" ) {
+    if ( [host] =~ "172.18.104.123" ) {
       elasticsearch {
         index => "logstash_netflow-%{+YYYY.MM.dd}"
         host => "localhost"

@@ -130,7 +130,7 @@ Step 3. The Logstash configuration files are under /etc/logstash/conf.d. The con
       }
       output {
         stdout { codec => rubydebug }
-        if ( [host] =~ "172.18.104.179" ) {
+        if ( [host] =~ "172.18.104.1" ) {
           elasticsearch {
             index => "logstash_netflow-%{+YYYY.MM.dd}"
             host => "localhost"

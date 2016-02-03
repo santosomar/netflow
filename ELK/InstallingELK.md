@@ -6,7 +6,7 @@ Example 4-6 Adding the Oracle Java PPA
     gpg: keyring `/tmp/tmpe2orytku/secring.gpg' created
     gpg: keyring `/tmp/tmpe2orytku/pubring.gpg' created
     gpg: requesting key EEA14886 from hkp server keyserver.ubuntu.com
-    gpg: /tmp/tmpe2orytku/trustdb.gpg: trustdb created
+    gpg: /tmp/tmpe2orytku/trustdb.gpg: trustdb created1
     gpg: key EEA14886: public key "Launchpad VLC" imported
     gpg: Total number processed: 1
     gpg:               imported: 1  (RSA: 1)
@@ -130,7 +130,7 @@ Step 3. The Logstash configuration files are under /etc/logstash/conf.d. The con
       }
       output {
         stdout { codec => rubydebug }
-        if ( [host] =~ "172.18.104.1" ) {
+        if ( [host] =~ "172.18.104.179" ) {
           elasticsearch {
             index => "logstash_netflow-%{+YYYY.MM.dd}"
             host => "localhost"

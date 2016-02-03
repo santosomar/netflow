@@ -119,31 +119,30 @@ Step 2. Install Logstash with the sudo apt-get install logstash command, as show
 
 Step 3. The Logstash configuration files are under /etc/logstash/conf.d. The configuration files are in JSON format. The configuration consists of three sections: inputs, filters, and outputs:
 
-input {
-    udp {
-      port => 9996
-      codec => netflow {
-        definitions => "/opt/logstash/codecs/netflow/netflow.yaml"
-        versions => 9
+    input {
+        udp {
+          port => 9996
+          codec => netflow {
+            definitions => "/opt/logstash/codecs/netflow/netflow.yaml"
+            versions => 9
+          }
+        }
       }
-    }
-  }
-
-  output {
-    stdout { codec => rubydebug }
-    if ( [host] =~ "172.18.104.1" ) {
-      elasticsearch {
-        index => "logstash_netflow-%{+YYYY.MM.dd}"
-        host => "localhost"
+      output {
+        stdout { codec => rubydebug }
+        if ( [host] =~ "172.18.104.1" ) {
+          elasticsearch {
+            index => "logstash_netflow-%{+YYYY.MM.dd}"
+            host => "localhost"
+          }
+        } else {
+          elasticsearch {
+            index => "logstash-%{+YYYY.MM.dd}"
+            host => "localhost"
+          }
+        }
       }
-    } else {
-      elasticsearch {
-        index => "logstash-%{+YYYY.MM.dd}"
-        host => "localhost"
-      }
-    }
-  }
-
+    
 In this example, Logstash is configured to accept NetFlow records from R1 (172.18.104.1). The NetFlow data is exported to Elasticsearch with the logstash_netflow-YYYY.MM.dd index named; where YYYY.MM.dd is the date when the NetFlow data was received. The server is configured to listen on UDP port 9996.
 Note: You can find additional examples and resources at https://github.com/santosomar/netflow. You can also contribute with your own examples and code there.
 The following template is used for the server to be able to parse the fields from NetFlow:
